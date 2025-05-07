@@ -1,0 +1,125 @@
+{
+  "project_info": {
+    "project_number": "731123317224",
+    "firebase_url": "https://igrejansl-89d79-default-rtdb.firebaseio.com",
+    "project_id": "igrejansl-89d79",
+    "storage_bucket": "igrejansl-89d79.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731123317224:android:dad105c54ff5eea9de8c5d",
+        "android_client_info": {
+          "package_name": "br.com.igreja"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcbi22N9B1jZrRylf2EBRZRB0kaThg6uo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731123317224:android:6ff7b626b645d3ebde8c5d",
+        "android_client_info": {
+          "package_name": "br.com.igreja.app_igreja"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcbi22N9B1jZrRylf2EBRZRB0kaThg6uo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731123317224:android:74175dd8775c96efde8c5d",
+        "android_client_info": {
+          "package_name": "com.example.adm_igreja"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcbi22N9B1jZrRylf2EBRZRB0kaThg6uo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731123317224:android:31e3af3282797b9fde8c5d",
+        "android_client_info": {
+          "package_name": "com.example.flutter_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcbi22N9B1jZrRylf2EBRZRB0kaThg6uo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731123317224:android:4711db263ca8545cde8c5d",
+        "android_client_info": {
+          "package_name": "com.flutter_example"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcbi22N9B1jZrRylf2EBRZRB0kaThg6uo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731123317224:android:401e8432f573c637de8c5d",
+        "android_client_info": {
+          "package_name": "com.igreja"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcbi22N9B1jZrRylf2EBRZRB0kaThg6uo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
