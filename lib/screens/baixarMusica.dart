@@ -82,6 +82,35 @@ class _DownloadPageState extends State<DownloadPage> {
     }
   }
 
+  Future<void> listarDiretorios() async {
+    final dir = await getApplicationDocumentsDirectory();
+    final entries = Directory(dir.path).listSync();
+
+    for (var entry in entries) {
+      if (entry is Directory) {
+        print('Diretório: ${entry.path}');
+      }
+    }
+  }
+
+  Future<void> listarArquivosDoDiretorio(String nomeDiretorio) async {
+    final appDir = await getApplicationDocumentsDirectory();
+    final dirPath = '${appDir.path}/$nomeDiretorio';
+    final dir = Directory(dirPath);
+
+    if (await dir.exists()) {
+      final arquivos = dir.listSync();
+
+      for (var arquivo in arquivos) {
+        if (arquivo is File) {
+          print('Arquivo: ${arquivo.path}');
+        }
+      }
+    } else {
+      print('Diretório não encontrado: $dirPath');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +122,7 @@ class _DownloadPageState extends State<DownloadPage> {
             Text(status),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => baixarMusica("dias_gloria.mp3"),
+              onPressed: () => baixarMusica("Algo_Novo.mp3"),
               child: Text("Baixar Algo Novo.mp3"),
             ),
             ElevatedButton(
@@ -101,6 +130,18 @@ class _DownloadPageState extends State<DownloadPage> {
                 listarArquivosLocais();
               },
               child: Text("listar músicas baixada"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                listarDiretorios();
+              },
+              child: Text("listar diretórios"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                listarArquivosDoDiretorio('Algo_Novo');
+              },
+              child: Text("listar arquivos dentro do diretórios"),
             ),
           ],
         ),
