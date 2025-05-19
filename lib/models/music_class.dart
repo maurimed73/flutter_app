@@ -4,6 +4,7 @@ class Music {
   final String description;
   final String pdfUrl;
   final String linkUrl;
+  final Map<String, dynamic> backs;
 
   Music({
     required this.title,
@@ -11,5 +12,28 @@ class Music {
     required this.description,
     required this.pdfUrl,
     required this.linkUrl,
+    this.backs = const {},
   });
+
+  factory Music.fromMap(Map<String, dynamic> map) {
+    return Music(
+      title: map['title'] ?? '',
+      imageUrl: map['imageUrl'] ?? '',
+      description: map['description'] ?? '',
+      pdfUrl: map['pdfUrl'] ?? '',
+      linkUrl: map['linkUrl'] ?? '',
+      backs: Map<String, dynamic>.from(map['backs'] ?? {}),
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'imageUrl': imageUrl,
+      'description': description,
+      'pdfUrl': pdfUrl,
+      'linkUrl': linkUrl,
+      'backs': backs,
+    };
+  }
 }

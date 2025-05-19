@@ -33,21 +33,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
     for (var doc in snapshot.docs) {
       final data = doc.data();
-      final title = data['title'];
-      final description = data['description'];
-      final linkUrl = data['linkUrl'];
+      // final title = data['title'];
+      // final description = data['description'];
+      // final linkUrl = data['linkUrl'];
 
-      // Caminhos no Storage
-      final imagePath = data['imageUrl'];
-      final pdfPath = data['pdfUrl'];
+      // // Caminhos no Storage
+      // final imagePath = data['imageUrl'];
+      // final pdfPath = data['pdfUrl'];
 
-      musicas.add(Music(
-        title: title,
-        description: description,
-        imageUrl: imagePath,
-        pdfUrl: pdfPath,
-        linkUrl: linkUrl,
-      ));
+      var music1 = Music.fromMap(data);
+
+      // musicas.add(Music(
+      //   title: title,
+      //   description: description,
+      //   imageUrl: imagePath,
+      //   pdfUrl: pdfPath,
+      //   linkUrl: linkUrl,
+      // ));
+      musicas.add(music1);
     }
 
     return musicas;

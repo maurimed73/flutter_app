@@ -19,7 +19,7 @@ class _VocaisPageState extends State<VocaisPage> {
   void initState() {
     super.initState();
     //_initPlayers();
-    testeArquivo();
+    // testeArquivo();
     //testAssetLoad();
   }
 

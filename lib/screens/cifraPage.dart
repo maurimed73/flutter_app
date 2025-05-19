@@ -4,7 +4,8 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/music_class.dart';
-import 'package:flutter_app/screens/vocais.dart';
+import 'package:flutter_app/screens/audioMusicBacks.dart';
+
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -190,7 +191,7 @@ class _CifraPageState extends State<CifraPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => VocaisPage()),
+                                      builder: (context) => AudioListPage(music: widget.music,)),
                                   //MaterialPageRoute(builder: (context) => CifraPage()),
                                 );
                               },

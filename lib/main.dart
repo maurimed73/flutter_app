@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/screens/baixarMusica.dart';
 import 'package:flutter_app/screens/homePage.dart';
 
 void main() async {
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
             seedColor: Colors.amberAccent, brightness: Brightness.dark),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      // home: MyHomePage(),
+      home: DownloadPage(),
     );
   }
 }
