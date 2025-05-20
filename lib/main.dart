@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
             seedColor: Colors.amberAccent, brightness: Brightness.dark),
         useMaterial3: true,
       ),
-      // home: MyHomePage(),
-      home: DownloadPage(),
+      home: MyHomePage(),
+      //home: DownloadPage(),
     );
   }
 }

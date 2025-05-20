@@ -9,6 +9,7 @@ import 'dart:async';
 import 'package:flutter_app/models/music_class.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class CifraPage extends StatefulWidget {
   final Music music;
@@ -32,7 +33,7 @@ class _CifraPageState extends State<CifraPage> {
   @override
   void initState() {
     super.initState();
-    loadPdf();
+    loadPdf(widget.music.description);
 
     audioPlayer.onPositionChanged.listen((d) {
       setState(() => current = d);
@@ -48,23 +49,55 @@ class _CifraPageState extends State<CifraPage> {
     });
   }
 
-  Future<void> loadPdf() async {
-    final pdfFileTemp = await downloadFile('pdf/${widget.music.pdfUrl}');
+  Future<void> loadPdf(String pdf) async {
+    String bancoMusica = pdf;
+
+    final directory = await getApplicationDocumentsDirectory();
+    final filePath = '${directory.path}/$bancoMusica/$bancoMusica.pdf';
+
+    // final pdfFileTemp = await downloadFile('pdf/${widget.music.pdfUrl}');
 
     setState(() {
-      pdfFile = pdfFileTemp;
+      pdfFile = File(filePath);
       loading = false;
     });
   }
 
-  Future<File> downloadFile(String firebasePath) async {
-    final ref = FirebaseStorage.instance.ref().child(firebasePath);
-    final bytes = await ref.getData();
-    final dir = await getTemporaryDirectory();
-    final file = File('${dir.path}/${firebasePath.split('/').last}');
-    await file.writeAsBytes(bytes!);
-    return file;
-  }
+  // Future<File> downloadFile(String firebasePath) async {
+  //   final ref = FirebaseStorage.instance.ref().child(firebasePath);
+  //   final bytes = await ref.getData();
+  //   final dir = await getTemporaryDirectory();
+  //   final file = File('${dir.path}/${firebasePath.split('/').last}');
+  //   await file.writeAsBytes(bytes!);
+  //   return file;
+  // }
+
+  // Future<void> togglePlayPause() async {
+  //   if (isPlaying) {
+  //     await audioPlayer.pause();
+  //     setState(() => isPlaying = false);
+  //   } else {
+  //     if (current == Duration.zero) {
+  //       setState(() => isLoading = true); // começa o loading
+  //       try {
+  //         String url = await FirebaseStorage.instance
+  //             .ref(widget.music.linkUrl)
+  //             .getDownloadURL();
+  //         await audioPlayer.play(UrlSource(url));
+  //         setState(() => isPlaying = true);
+  //       } catch (e) {
+  //         ScaffoldMessenger.of(context).showSnackBar(
+  //           SnackBar(content: Text('Erro ao carregar música')),
+  //         );
+  //       } finally {
+  //         setState(() => isLoading = false); // termina o loading
+  //       }
+  //     } else {
+  //       await audioPlayer.resume();
+  //       setState(() => isPlaying = true);
+  //     }
+  //   }
+  // }
 
   Future<void> togglePlayPause() async {
     if (isPlaying) {
@@ -74,14 +107,26 @@ class _CifraPageState extends State<CifraPage> {
       if (current == Duration.zero) {
         setState(() => isLoading = true); // começa o loading
         try {
-          String url = await FirebaseStorage.instance
-              .ref(widget.music.linkUrl)
-              .getDownloadURL();
-          await audioPlayer.play(UrlSource(url));
-          setState(() => isPlaying = true);
+          final directory = await getApplicationDocumentsDirectory();
+          final localPath =
+              '${directory.path}/${widget.music.description}/${widget.music.description}.mp3';
+          final file = File(localPath);
+
+          if (await file.exists()) {
+            // 🎵 Toca do arquivo local
+            await audioPlayer.play(DeviceFileSource(file.path));
+            setState(() => isPlaying = true);
+          } else {
+            // 🔁 Se não existe localmente, tenta o Firebase como fallback
+            // String url = await FirebaseStorage.instance
+            //     .ref(widget.music.linkUrl)
+            //     .getDownloadURL();
+            // await audioPlayer.play(UrlSource(url));
+            // setState(() => isPlaying = true);
+          }
         } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Erro ao carregar música')),
+            SnackBar(content: Text('Erro ao carregar música: $e')),
           );
         } finally {
           setState(() => isLoading = false); // termina o loading
@@ -93,18 +138,18 @@ class _CifraPageState extends State<CifraPage> {
     }
   }
 
-  Future<void> playFromFirebase() async {
-    String url = await FirebaseStorage.instance
-        .ref(widget.music.linkUrl) // caminho no Storage
-        .getDownloadURL();
+  // Future<void> playFromFirebase() async {
+  //   String url = await FirebaseStorage.instance
+  //       .ref(widget.music.linkUrl) // caminho no Storage
+  //       .getDownloadURL();
 
-    if (isPlaying) {
-    } else {
-      await audioPlayer.play(UrlSource(url)); // streaming direto
-    }
+  //   if (isPlaying) {
+  //   } else {
+  //     await audioPlayer.play(UrlSource(url)); // streaming direto
+  //   }
 
-    setState(() => isPlaying = true);
-  }
+  //   setState(() => isPlaying = true);
+  // }
 
   @override
   void dispose() {

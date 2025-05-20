@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -12,37 +12,6 @@ class DownloadPage extends StatefulWidget {
 
 class _DownloadPageState extends State<DownloadPage> {
   String status = "Aguardando...";
-
-  // Future<void> baixarMusica(String nomeArquivo) async {
-  //   setState(() => status = "Verificando permissões...");
-
-  //   // Solicitar permissão (Android)
-  //   if (Platform.isAndroid) {
-  //     var statusPermissao = await Permission.storage.request();
-  //     if (!statusPermissao.isGranted) {
-  //       setState(() => status = "Permissão negada.");
-  //       return;
-  //     }
-  //   }
-
-  //   try {
-  //     setState(() => status = "Buscando URL...");
-
-  //     final ref = FirebaseStorage.instance.ref().child('music/$nomeArquivo');
-  //     final url = await ref.getDownloadURL();
-
-  //     final dir = await getApplicationDocumentsDirectory();
-  //     final filePath = '${dir.path}/$nomeArquivo';
-
-  //     setState(() => status = "Baixando...");
-
-  //     await Dio().download(url, filePath);
-
-  //     setState(() => status = "Download concluído: $filePath");
-  //   } catch (e) {
-  //     setState(() => status = "Erro: $e");
-  //   }
-  // }
 
   Future<void> baixarMusica(String nomeArquivo) async {
     setState(() => status = "Baixando...");
@@ -88,7 +57,9 @@ class _DownloadPageState extends State<DownloadPage> {
 
     for (var entry in entries) {
       if (entry is Directory) {
-        print('Diretório: ${entry.path}');
+        if (entry is Directory && !entry.path.contains('flutter_assets')) {
+          print('Diretório: ${entry.path}');
+        }
       }
     }
   }
@@ -139,7 +110,7 @@ class _DownloadPageState extends State<DownloadPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                listarArquivosDoDiretorio('Algo_Novo');
+                listarArquivosDoDiretorio('flutter_assets');
               },
               child: Text("listar arquivos dentro do diretórios"),
             ),
