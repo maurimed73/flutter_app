@@ -1,11 +1,11 @@
-// ignore: file_names
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:flutter_app/models/music_class.dart';
-import 'package:flutter_app/screens/audioMusicBacks.dart';
-
+import 'package:flutter_app/screens/audio_music_backs.dart';
+import 'package:flutter_app/screens/utils/responsive_utils.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -16,7 +16,6 @@ class CifraPage extends StatefulWidget {
     required this.music,
   });
   @override
-  // ignore: library_private_types_in_public_api
   _CifraPageState createState() => _CifraPageState();
 }
 
@@ -28,11 +27,12 @@ class _CifraPageState extends State<CifraPage> {
   Duration current = Duration.zero;
   Duration total = Duration.zero;
   File? pdfFile;
+  bool isFullScreen = false;
 
   @override
   void initState() {
     super.initState();
-    loadPdf();
+    loadPdf(widget.music.description);
 
     audioPlayer.onPositionChanged.listen((d) {
       setState(() => current = d);
@@ -48,22 +48,16 @@ class _CifraPageState extends State<CifraPage> {
     });
   }
 
-  Future<void> loadPdf() async {
-    final pdfFileTemp = await downloadFile('pdf/${widget.music.pdfUrl}');
+  Future<void> loadPdf(String pdf) async {
+    String bancoMusica = pdf;
+
+    final directory = await getApplicationDocumentsDirectory();
+    final filePath = '${directory.path}/$bancoMusica/$bancoMusica.pdf';
 
     setState(() {
-      pdfFile = pdfFileTemp;
+      pdfFile = File(filePath);
       loading = false;
     });
-  }
-
-  Future<File> downloadFile(String firebasePath) async {
-    final ref = FirebaseStorage.instance.ref().child(firebasePath);
-    final bytes = await ref.getData();
-    final dir = await getTemporaryDirectory();
-    final file = File('${dir.path}/${firebasePath.split('/').last}');
-    await file.writeAsBytes(bytes!);
-    return file;
   }
 
   Future<void> togglePlayPause() async {
@@ -74,14 +68,26 @@ class _CifraPageState extends State<CifraPage> {
       if (current == Duration.zero) {
         setState(() => isLoading = true); // começa o loading
         try {
-          String url = await FirebaseStorage.instance
-              .ref(widget.music.linkUrl)
-              .getDownloadURL();
-          await audioPlayer.play(UrlSource(url));
-          setState(() => isPlaying = true);
+          final directory = await getApplicationDocumentsDirectory();
+          final localPath =
+              '${directory.path}/${widget.music.description}/${widget.music.description}.mp3';
+          final file = File(localPath);
+
+          if (await file.exists()) {
+            // 🎵 Toca do arquivo local
+            await audioPlayer.play(DeviceFileSource(file.path));
+            setState(() => isPlaying = true);
+          } else {
+            // 🔁 Se não existe localmente, tenta o Firebase como fallback
+            // String url = await FirebaseStorage.instance
+            //     .ref(widget.music.linkUrl)
+            //     .getDownloadURL();
+            // await audioPlayer.play(UrlSource(url));
+            // setState(() => isPlaying = true);
+          }
         } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Erro ao carregar música')),
+            SnackBar(content: Text('Erro ao carregar música: $e')),
           );
         } finally {
           setState(() => isLoading = false); // termina o loading
@@ -93,23 +99,9 @@ class _CifraPageState extends State<CifraPage> {
     }
   }
 
-  Future<void> playFromFirebase() async {
-    String url = await FirebaseStorage.instance
-        .ref(widget.music.linkUrl) // caminho no Storage
-        .getDownloadURL();
-
-    if (isPlaying) {
-    } else {
-      await audioPlayer.play(UrlSource(url)); // streaming direto
-    }
-
-    setState(() => isPlaying = true);
-  }
-
   @override
   void dispose() {
     audioPlayer.dispose();
-
     super.dispose();
   }
 
@@ -145,113 +137,184 @@ class _CifraPageState extends State<CifraPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-            actions: [],
-            title: Text(
-              widget.music.title,
-              style: TextStyle(fontSize: 24),
-            )),
-        body: Padding(
-          padding:
-              const EdgeInsets.only(bottom: 0, top: 0, right: 20, left: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  Row(
+          actions: [],
+          title: Text(
+            widget.music.title,
+            style: TextStyle(
+              fontSize: ResponsiveUtils.scalePercent(context, 6),
+            ),
+          ),
+        ),
+        body: isFullScreen
+            ? Scaffold(
+                body: SafeArea(
+                  child: Stack(
                     children: [
-                      ElevatedButton(
-                        onPressed: isLoading ? null : togglePlayPause,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              isPlaying ? Icons.pause : Icons.play_arrow,
-                              size: 26,
-                            ),
-                            SizedBox(width: 10),
-                            Text(
-                              isPlaying ? 'Stop' : 'Play',
-                              style: TextStyle(fontSize: 24),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                          ],
+                      Expanded(
+                        child: InteractiveViewer(
+                          panEnabled: true,
+                          scaleEnabled: true,
+                          minScale: 1.0,
+                          maxScale: 3.0,
+                          child: PDFView(
+                            filePath: pdfFile!.path,
+                            autoSpacing: false,
+                            swipeHorizontal: false,
+                            enableSwipe: true,
+                            pageFling: false,
+                          ),
                         ),
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      ElevatedButton(
-                        onPressed: isPlaying
-                            ? null
-                            : () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AudioListPage(music: widget.music,)),
-                                  //MaterialPageRoute(builder: (context) => CifraPage()),
-                                );
-                              },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.mic,
-                              size: 26,
-                            ),
-                            SizedBox(width: 10),
-                            Text(
-                              'Vocais',
-                              style: TextStyle(fontSize: 24),
-                            ),
-                          ],
+                      Positioned(
+                        top: 20,
+                        right: 20,
+                        child: FloatingActionButton(
+                          backgroundColor: Colors.black54,
+                          mini: true,
+                          onPressed: () {
+                            setState(() => isFullScreen = false);
+                          },
+                          child: Icon(
+                            Icons.close,
+                            size: ResponsiveUtils.scalePercent(context, 6),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  if (isLoading)
-                    Positioned.fill(
-                      child: Center(child: CircularProgressIndicator()),
+                ),
+              )
+            : _buildNormalView(context),
+      ),
+    );
+  }
+
+  Widget _buildNormalView(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 0, top: 0, right: 20, left: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: isLoading ? null : togglePlayPause,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          isPlaying ? Icons.pause : Icons.play_arrow,
+                          size: 26,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          isPlaying ? 'Stop' : 'Play',
+                          style: TextStyle(
+                            fontSize: ResponsiveUtils.scalePercent(context, 5),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                      ],
                     ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: isPlaying
+                        ? null
+                        : () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BacksMusic(
+                                        music: widget.music,
+                                      )),
+                            );
+                          },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.mic,
+                          size: 26,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          'Vocais',
+                          style: TextStyle(
+                            fontSize: ResponsiveUtils.scalePercent(context, 5),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-              Slider(
-                value: current.inSeconds.toDouble(),
-                max: total.inSeconds.toDouble(),
-                onChanged: (value) {
-                  audioPlayer.seek(Duration(seconds: value.toInt()));
-                },
-              ),
-              Text(
-                '${current.inMinutes}:${(current.inSeconds % 60).toString().padLeft(2, '0')}'
-                ' / '
-                '${total.inMinutes}:${(total.inSeconds % 60).toString().padLeft(2, '0')}',
-              ),
-              loading
-                  ? SizedBox(
-                      height: 200,
-                      child: Center(child: CircularProgressIndicator()))
-                  : Expanded(
-                      child: Stack(
-                        children: [
-                          GestureDetector(
-                            child: PDFView(
-                              filePath: pdfFile!.path,
-                              autoSpacing: false,
-                              swipeHorizontal: false,
-                              enableSwipe: true,
-                              pageFling: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+              if (isLoading)
+                Positioned.fill(
+                  child: Center(child: CircularProgressIndicator()),
+                ),
             ],
           ),
-        ),
+          Slider(
+            value: current.inSeconds.toDouble(),
+            max: total.inSeconds.toDouble(),
+            onChanged: (value) {
+              audioPlayer.seek(Duration(seconds: value.toInt()));
+            },
+          ),
+          Text(
+            '${current.inMinutes}:${(current.inSeconds % 60).toString().padLeft(2, '0')}'
+            ' / '
+            '${total.inMinutes}:${(total.inSeconds % 60).toString().padLeft(2, '0')}',
+            style: TextStyle(
+              fontSize: ResponsiveUtils.scalePercent(context, 4),
+            ),
+          ),
+          loading
+              ? SizedBox(
+                  height: 200,
+                  child: Center(child: CircularProgressIndicator()))
+              : Expanded(
+                  child: Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: GestureDetector(
+                          child: PDFView(
+                            filePath: pdfFile!.path,
+                            autoSpacing: false,
+                            swipeHorizontal: false,
+                            enableSwipe: true,
+                            pageFling: false,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 15,
+                        right: 10,
+                        child: FloatingActionButton(
+                          mini: true,
+                          backgroundColor: Colors.black54,
+                          onPressed: () {
+                            setState(() => isFullScreen = true);
+                          },
+                          child: Icon(
+                            Icons.fullscreen,
+                            size: ResponsiveUtils.scalePercent(context, 6),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+        ],
       ),
     );
   }
