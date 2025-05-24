@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/homePage.dart';
+import 'package:flutter_app/provider/download_provider.dart';
+import 'package:flutter_app/provider/music_provider.dart';
+import 'package:flutter_app/screens/music_mobile.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,20 +14,23 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      showSemanticsDebugger: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.amberAccent, brightness: Brightness.dark),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => DownloadProvider()),
+        ChangeNotifierProvider(create: (_) => MusicProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Music App',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.amberAccent, brightness: Brightness.dark),
+          useMaterial3: true,
+        ),
+        home: MusicMobile(),
       ),
-      home: MyHomePage(),
-      //home: DownloadPage(),
     );
   }
 }

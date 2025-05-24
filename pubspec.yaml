@@ -48,6 +48,9 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^29.1.38
   lottie: ^3.3.1
   google_fonts: ^6.2.1
+  connectivity_plus: ^6.1.4
+  provider: ^6.1.5
+  file_picker: ^10.1.9
 
 
 
@@ -77,6 +80,7 @@ flutter:
   assets:
     - assets/pdfs/
     - assets/downloads/
+    - assets/images/
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

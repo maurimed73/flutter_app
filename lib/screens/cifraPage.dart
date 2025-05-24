@@ -3,14 +3,18 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:flutter_app/models/music_class.dart';
+import 'package:flutter_app/models/music_class_server.dart';
+import 'package:flutter_app/provider/music_provider.dart';
 import 'package:flutter_app/screens/audio_music_backs.dart';
-import 'package:flutter_app/screens/utils/responsive_utils.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:flutter_app/screens/cifraApp.dart';
+
+import 'package:flutter_app/utils/responsive_utils.dart';
+
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
 class CifraPage extends StatefulWidget {
-  final Music music;
+  final MusicServer music;
   const CifraPage({
     super.key,
     required this.music,
@@ -151,22 +155,10 @@ class _CifraPageState extends State<CifraPage> {
                   child: Stack(
                     children: [
                       Expanded(
-                        child: InteractiveViewer(
-                          panEnabled: true,
-                          scaleEnabled: true,
-                          minScale: 1.0,
-                          maxScale: 3.0,
-                          child: PDFView(
-                            filePath: pdfFile!.path,
-                            autoSpacing: false,
-                            swipeHorizontal: false,
-                            enableSwipe: true,
-                            pageFling: false,
-                          ),
-                        ),
+                        child: CifraApp(),
                       ),
                       Positioned(
-                        top: 20,
+                        top: 5,
                         right: 20,
                         child: FloatingActionButton(
                           backgroundColor: Colors.black54,
@@ -191,70 +183,75 @@ class _CifraPageState extends State<CifraPage> {
 
   Widget _buildNormalView(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 0, top: 0, right: 20, left: 20),
+      padding: const EdgeInsets.only(bottom: 0, top: 0, right: 0, left: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Stack(
             alignment: Alignment.center,
             children: [
-              Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: isLoading ? null : togglePlayPause,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          isPlaying ? Icons.pause : Icons.play_arrow,
-                          size: 26,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          isPlaying ? 'Stop' : 'Play',
-                          style: TextStyle(
-                            fontSize: ResponsiveUtils.scalePercent(context, 5),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: isLoading ? null : togglePlayPause,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            isPlaying ? Icons.pause : Icons.play_arrow,
+                            size: 26,
                           ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  ElevatedButton(
-                    onPressed: isPlaying
-                        ? null
-                        : () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BacksMusic(
-                                        music: widget.music,
-                                      )),
-                            );
-                          },
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.mic,
-                          size: 26,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          'Vocais',
-                          style: TextStyle(
-                            fontSize: ResponsiveUtils.scalePercent(context, 5),
+                          SizedBox(width: 10),
+                          Text(
+                            isPlaying ? 'Stop' : 'Play',
+                            style: TextStyle(
+                              fontSize:
+                                  ResponsiveUtils.scalePercent(context, 4),
+                            ),
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            width: 20,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      width: 10,
+                    ),
+                    ElevatedButton(
+                      onPressed: isPlaying
+                          ? null
+                          : () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BacksMusic(
+                                          music: widget.music,
+                                        )),
+                              );
+                            },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.mic,
+                            size: 26,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Vocais',
+                            style: TextStyle(
+                              fontSize:
+                                  ResponsiveUtils.scalePercent(context, 4),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               if (isLoading)
                 Positioned.fill(
@@ -287,13 +284,7 @@ class _CifraPageState extends State<CifraPage> {
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: GestureDetector(
-                          child: PDFView(
-                            filePath: pdfFile!.path,
-                            autoSpacing: false,
-                            swipeHorizontal: false,
-                            enableSwipe: true,
-                            pageFling: false,
-                          ),
+                          child: CifraApp(),
                         ),
                       ),
                       Positioned(

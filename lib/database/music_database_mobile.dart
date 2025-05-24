@@ -1,15 +1,14 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:flutter_app/models/music_class.dart';
+import 'package:flutter_app/models/music_class_server.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-class MusicDatabase {
-  static final MusicDatabase instance = MusicDatabase._init();
+class MusicDatabaseMobile {
+  static final MusicDatabaseMobile instance = MusicDatabaseMobile._init();
   static Database? _database;
 
-  MusicDatabase._init();
+  MusicDatabaseMobile._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -37,7 +36,7 @@ class MusicDatabase {
     ''');
   }
 
-  Future<void> insertMusic(Music music) async {
+  Future<void> insertMusic(MusicServer music) async {
     final db = await instance.database;
     await db.insert(
       'musics',
@@ -46,13 +45,13 @@ class MusicDatabase {
     );
   }
 
-  Future<List<Music>> getAllMusics() async {
+  Future<List<MusicServer>> getAllMusics() async {
     final db = await instance.database;
     final result = await db.query('musics');
 
     return result.map((map) {
       final backsString = map['backs'];
-      return Music.fromMap({
+      return MusicServer.fromMap({
         ...map,
         'backs': backsString is String ? jsonDecode(backsString) : {},
       });

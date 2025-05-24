@@ -2,15 +2,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/utils/responsive_utils.dart';
+import 'package:flutter_app/utils/responsive_utils.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
-import 'package:flutter_app/models/music_class.dart';
+import 'package:flutter_app/models/music_class_server.dart';
 
 class BacksMusic extends StatefulWidget {
-  Music music;
+  MusicServer music;
   BacksMusic({
     super.key,
     required this.music,

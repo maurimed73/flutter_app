@@ -1,4 +1,4 @@
-class Music {
+class MusicServer {
   final String title;
   final String imageUrl;
   final String description;
@@ -6,7 +6,7 @@ class Music {
   final String linkUrl;
   final Map<String, dynamic> backs;
 
-  Music({
+  MusicServer({
     required this.title,
     required this.imageUrl,
     required this.description,
@@ -15,8 +15,8 @@ class Music {
     this.backs = const {},
   });
 
-  factory Music.fromMap(Map<String, dynamic> map) {
-    return Music(
+  factory MusicServer.fromMap(Map<String, dynamic> map) {
+    return MusicServer(
       title: map['title'] ?? '',
       imageUrl: map['imageUrl'] ?? '',
       description: map['description'] ?? '',
