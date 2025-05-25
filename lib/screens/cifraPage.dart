@@ -155,7 +155,9 @@ class _CifraPageState extends State<CifraPage> {
                   child: Stack(
                     children: [
                       Expanded(
-                        child: CifraApp(),
+                        child: CifraApp(
+                          music: widget.music,
+                        ),
                       ),
                       Positioned(
                         top: 5,
@@ -284,7 +286,9 @@ class _CifraPageState extends State<CifraPage> {
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: GestureDetector(
-                          child: CifraApp(),
+                          child: CifraApp(
+                            music: widget.music,
+                          ),
                         ),
                       ),
                       Positioned(

@@ -6,7 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/database/cifra_repository.dart';
 import 'package:flutter_app/screens/cifraApp.dart';
-import 'package:file_picker/file_picker.dart';
+
 import 'package:path_provider/path_provider.dart';
 
 class ConfigMusica extends StatefulWidget {
@@ -23,7 +23,7 @@ class _ConfigMusicaState extends State<ConfigMusica> {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 // Música DIAS DE GLÓRIA - TOM E
-  List<List<BlocoCifra>> linhasDiasDeGloria = [
+  List<List<BlocoCifra>> resultCifra = [
     [
       BlocoCifra(acorde: "A9", texto: "Passei"),
       BlocoCifra(acorde: "", texto: " anos no "),
@@ -55,7 +55,7 @@ class _ConfigMusicaState extends State<ConfigMusica> {
     ],
     [
       BlocoCifra(acorde: "A9", texto: "Sus"),
-      BlocoCifra(acorde: "", texto: "tentado por Sua"),
+      BlocoCifra(acorde: "", texto: "tentado por Sua "),
       BlocoCifra(acorde: "F#m7", texto: "Graça"),
       BlocoCifra(acorde: "", texto: " Revestido da "),
       BlocoCifra(acorde: "G#m7", texto: "couraça"),
@@ -75,13 +75,11 @@ class _ConfigMusicaState extends State<ConfigMusica> {
       BlocoCifra(acorde: "", texto: "há outro Deus "),
       BlocoCifra(acorde: "C#m7", texto: "igual. "),
       BlocoCifra(acorde: "", texto: "Vou celebrar dias de "),
-      BlocoCifra(acorde: "A/", texto: "gló"),
-      BlocoCifra(acorde: "C#", texto: "ria"),
+      BlocoCifra(acorde: "A/", baixo: "C#", texto: "glória"),
     ],
     [
-      BlocoCifra(acorde: "", texto: "Uma nova traj"),
-      BlocoCifra(acorde: "F#/", texto: "etó"),
-      BlocoCifra(acorde: "C#", texto: "ria"),
+      BlocoCifra(acorde: "", texto: "Uma nova "),
+      BlocoCifra(acorde: "F#/", baixo: "C#", texto: "trajetória"),
     ],
     [
       BlocoCifra(acorde: "", texto: "Tocar o sobre"),
@@ -114,7 +112,10 @@ class _ConfigMusicaState extends State<ConfigMusica> {
     ],
     [
       BlocoCifra(acorde: "", texto: "Enfim, "),
-      BlocoCifra(acorde: "C#m", texto: "chegou"),
+      BlocoCifra(acorde: "A9", texto: "chegou"),
+    ],
+    [
+      BlocoCifra(acorde: "", texto: "1º vez - A9, 2º C#m, 3º A9"),
     ],
     [
       BlocoCifra(acorde: "A9", texto: "Dias"),
@@ -196,16 +197,14 @@ class _ConfigMusicaState extends State<ConfigMusica> {
     // print(resultado);
 
     // 🔥 Salvar no Firebase
-    await salvarCifra('dias_gloria', linhasDiasDeGloria);
+    await salvarCifra('dias_gloria', resultCifra);
   }
 
   void enviarMusicaFirebase(String nomeMusica) async {
 // 🔥 Salvar no Firebase
-    await salvarCifra('dias_gloria', linhasDiasDeGloria);
+    await salvarCifra('dias_gloria', resultCifra);
   }
-  
-  
-  
+
   //************************************************************************************************************** */
 
   @override
@@ -220,7 +219,7 @@ class _ConfigMusicaState extends State<ConfigMusica> {
               onPressed: () async {
                 //            id no firebase           Json criado
                 //salvarCifra('Y7bTdyKfagSkqeyXscvD', linhasDiasDeGloria);
-                final data = {'linhas': linhasParaJson(linhasDiasDeGloria)};
+                final data = {'linhas': linhasParaJson(resultCifra)};
 
                 final arquivo = await salvarJsonEmArquivo(data, 'dias_gloria');
 

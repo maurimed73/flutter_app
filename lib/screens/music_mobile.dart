@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/data_for_firebase/config_Musicas.dart';
 import 'package:flutter_app/database/music_database_server.dart';
 import 'package:flutter_app/provider/music_provider.dart';
 import 'package:flutter_app/screens/cifraPage.dart';
@@ -44,6 +45,21 @@ class _MusicMobileState extends State<MusicMobile> {
       padding: const EdgeInsets.only(top: 20),
       child: Scaffold(
         appBar: AppBar(
+            actions: [
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 20),
+              //   child: IconButton(
+              //       onPressed: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //             builder: (context) => ConfigMusica(),
+              //           ),
+              //         );
+              //       },
+              //       icon: Icon(Icons.data_array)),
+              // )
+            ],
             toolbarHeight: ResponsiveUtils.scalePercent(context, 25),
             title: Container(
               width: double.infinity,

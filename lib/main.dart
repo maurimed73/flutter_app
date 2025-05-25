@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
               seedColor: Colors.amberAccent, brightness: Brightness.dark),
           useMaterial3: true,
         ),
+        //home: MusicMobile(),
         home: MusicMobile(),
       ),
     );

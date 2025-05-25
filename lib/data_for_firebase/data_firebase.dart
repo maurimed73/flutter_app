@@ -1,7 +1,7 @@
 import 'package:flutter_app/screens/cifraApp.dart';
 
 // Música DIAS DE GLÓRIA - TOM E
-List<List<BlocoCifra>> linhasFirebase = [
+List<List<BlocoCifra>> dias_de_gloria = [
   [
     BlocoCifra(acorde: "A9", texto: "Passei"),
     BlocoCifra(acorde: "", texto: " anos no "),
@@ -33,7 +33,7 @@ List<List<BlocoCifra>> linhasFirebase = [
   ],
   [
     BlocoCifra(acorde: "A9", texto: "Sus"),
-    BlocoCifra(acorde: "", texto: "tentado por Sua"),
+    BlocoCifra(acorde: "", texto: "tentado por Sua "),
     BlocoCifra(acorde: "F#m7", texto: "Graça"),
     BlocoCifra(acorde: "", texto: " Revestido da "),
     BlocoCifra(acorde: "G#m7", texto: "couraça"),
@@ -53,13 +53,11 @@ List<List<BlocoCifra>> linhasFirebase = [
     BlocoCifra(acorde: "", texto: "há outro Deus "),
     BlocoCifra(acorde: "C#m7", texto: "igual. "),
     BlocoCifra(acorde: "", texto: "Vou celebrar dias de "),
-    BlocoCifra(acorde: "A/", texto: "gló"),
-    BlocoCifra(acorde: "C#", texto: "ria"),
+    BlocoCifra(acorde: "A/", baixo: "C#", texto: "glória"),
   ],
   [
-    BlocoCifra(acorde: "", texto: "Uma nova traj"),
-    BlocoCifra(acorde: "F#/", texto: "etó"),
-    BlocoCifra(acorde: "C#", texto: "ria"),
+    BlocoCifra(acorde: "", texto: "Uma nova "),
+    BlocoCifra(acorde: "F#/", baixo: "C#", texto: "trajetória"),
   ],
   [
     BlocoCifra(acorde: "", texto: "Tocar o sobre"),
@@ -92,7 +90,10 @@ List<List<BlocoCifra>> linhasFirebase = [
   ],
   [
     BlocoCifra(acorde: "", texto: "Enfim, "),
-    BlocoCifra(acorde: "C#m", texto: "chegou"),
+    BlocoCifra(acorde: "A9", texto: "chegou"),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "1º vez - A9, 2º C#m, 3º A9"),
   ],
   [
     BlocoCifra(acorde: "A9", texto: "Dias"),
@@ -106,5 +107,289 @@ List<List<BlocoCifra>> linhasFirebase = [
     BlocoCifra(acorde: "B", texto: "ral"),
     BlocoCifra(acorde: "", texto: "has cairão, oh"),
     BlocoCifra(acorde: "A", texto: "oh"),
+  ],
+];
+
+List<List<BlocoCifra>> pediRecebereis = [
+  [
+    BlocoCifra(acorde: "F#m", texto: "Há uma"),
+    BlocoCifra(acorde: "", texto: " promessa "),
+    BlocoCifra(acorde: "D", texto: "que "),
+    BlocoCifra(acorde: "", texto: "quer se cumpr"),
+    BlocoCifra(acorde: "A", texto: "ir "),
+    BlocoCifra(acorde: "", texto: "em meio a nós"),
+    BlocoCifra(acorde: "E", texto: "    "),
+  ],
+  [],
+  [
+    BlocoCifra(acorde: "F#m", texto: "É o"),
+    BlocoCifra(acorde: "", texto: " próprio Senhor "),
+    BlocoCifra(acorde: "D", texto: "quem "),
+    BlocoCifra(acorde: "", texto: "diz: "),
+    BlocoCifra(acorde: "A", texto: "pedi"),
+    BlocoCifra(acorde: "", texto: " e "),
+    BlocoCifra(acorde: "E", texto: "recebereis"),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "Nenhum "),
+    BlocoCifra(acorde: "Bm", texto: "mal"),
+    BlocoCifra(acorde: "", texto: " irá resis"),
+    BlocoCifra(acorde: "D", texto: "tir"),
+    BlocoCifra(acorde: "A", texto: " Os mares"),
+    BlocoCifra(acorde: "", texto: " irão se "),
+    BlocoCifra(acorde: "E", texto: "abrir"),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "Quando a "),
+    BlocoCifra(acorde: "Bm", texto: "boca"),
+    BlocoCifra(acorde: "", texto: "de Deus decla"),
+    BlocoCifra(acorde: "D", texto: "rar"),
+    BlocoCifra(acorde: "A", texto: " Milagres"),
+    BlocoCifra(acorde: "E", texto: " neste "),
+    BlocoCifra(acorde: "D", texto: "lugar  "),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "Se eu "),
+    BlocoCifra(acorde: "F#m", texto: "orar,"),
+    BlocoCifra(acorde: "", texto: " se eu clamar as "),
+    BlocoCifra(acorde: "D", texto: "muralhas"),
+    BlocoCifra(acorde: "", texto: " não"),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "Resisti"),
+    BlocoCifra(acorde: "A", texto: "rão"),
+    BlocoCifra(acorde: "", texto: " ao poder de "),
+    BlocoCifra(acorde: "E", texto: "meu"),
+    BlocoCifra(acorde: "", texto: "Deus"),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "Se eu "),
+    BlocoCifra(acorde: "Gm", texto: "orar,"),
+    BlocoCifra(acorde: "", texto: " se eu clamar as "),
+    BlocoCifra(acorde: "D#", texto: "muralhas"),
+    BlocoCifra(acorde: "", texto: " não"),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "Resisti"),
+    BlocoCifra(acorde: "A#", texto: "rão"),
+    BlocoCifra(acorde: "", texto: " ao poder de "),
+    BlocoCifra(acorde: "F", texto: "meu"),
+    BlocoCifra(acorde: "", texto: " Deus"),
+  ],
+];
+
+List<List<BlocoCifra>> algo_novo = [
+  [
+    BlocoCifra(acorde: "D9", texto: "Vem"),
+    BlocoCifra(acorde: "", texto: " me visitar hoje aqui,"),
+    BlocoCifra(acorde: "", texto: " quero conhecer mais de ti"),
+  ],
+  [
+    BlocoCifra(acorde: "A4", texto: "Espirito"),
+    BlocoCifra(acorde: "Bm7", texto: " vem, "),
+    BlocoCifra(acorde: "", texto: "Espirito"),
+    BlocoCifra(acorde: "G9", texto: " vem, "),
+    BlocoCifra(acorde: "", texto: "Espirito"),
+    BlocoCifra(acorde: "D9", texto: "Santo"),
+  ],
+  [
+    BlocoCifra(acorde: "A4", texto: "Espirito"),
+    BlocoCifra(acorde: "Bm7", texto: " vem, "),
+    BlocoCifra(acorde: "", texto: "Espirito"),
+    BlocoCifra(acorde: "G", texto: " vem, "),
+    BlocoCifra(acorde: "", texto: "Espirito"),
+    BlocoCifra(acorde: "D9", texto: "Santo"),
+    BlocoCifra(acorde: "A4", texto: "     "),
+  ],
+  [
+    BlocoCifra(acorde: "Bm7", texto: "  Eu "),
+    BlocoCifra(acorde: "", texto: "quero"),
+    BlocoCifra(acorde: "G9", texto: " viver "),
+    BlocoCifra(acorde: "", texto: "algo"),
+    BlocoCifra(acorde: "D9", texto: "novo"),
+    BlocoCifra(acorde: "A4", texto: "     "),
+  ],
+  [
+    BlocoCifra(acorde: "Bm7", texto: "  Faz "),
+    BlocoCifra(acorde: "", texto: "meu cora"),
+    BlocoCifra(acorde: "G9", texto: "ção "),
+    BlocoCifra(acorde: "", texto: "arder de "),
+    BlocoCifra(acorde: "D9", texto: "novo"),
+  ],
+  [
+    BlocoCifra(acorde: "A4", texto: "Fazendo"),
+    BlocoCifra(acorde: "", texto: " todo "),
+    BlocoCifra(acorde: "Bm7", texto: "medo "),
+    BlocoCifra(acorde: "", texto: "desapare"),
+    BlocoCifra(acorde: "G9", texto: "cer"),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "Trazendo sobre"),
+    BlocoCifra(acorde: "D9", texto: " mim "),
+    BlocoCifra(acorde: "", texto: "um novo amanhecer  "),
+    BlocoCifra(acorde: "A4", texto: "  "),
+  ],
+  [
+    BlocoCifra(acorde: "Bm7", texto: "Ohhh..."),
+    BlocoCifra(acorde: "A9", texto: "ohhh..."),
+    BlocoCifra(acorde: "G9", texto: "ohhh..."),
+    BlocoCifra(acorde: "", texto: "ohhh..."),
+    BlocoCifra(acorde: "A9", texto: "       "),
+  ],
+  [
+    BlocoCifra(acorde: "Bm7", texto: "Ohhh..."),
+    BlocoCifra(acorde: "A9", texto: "ohhh..."),
+    BlocoCifra(acorde: "G9", texto: "ohhh..."),
+    BlocoCifra(acorde: "", texto: "ohhh..."),
+    BlocoCifra(acorde: "A9", texto: "       "),
+  ],
+  [
+    BlocoCifra(acorde: "Bm7", texto: "Santo"),
+    BlocoCifra(acorde: "", texto: "Espírito, desce como fogo"),
+  ],
+  [
+    BlocoCifra(acorde: "A4", texto: "Santo"),
+    BlocoCifra(acorde: "", texto: "Espírito, desce como fogo"),
+  ],
+  [
+    BlocoCifra(acorde: "G9", texto: "  Incen"),
+    BlocoCifra(acorde: "", texto: "deia, incendeia"),
+  ],
+];
+
+List<List<BlocoCifra>> tu_es = [
+  [
+    BlocoCifra(acorde: "Bm7", texto: " Junto"),
+    BlocoCifra(acorde: "", texto: " ao poço, "),
+    BlocoCifra(acorde: " A/", baixo: "C#", texto: "estava"),
+    BlocoCifra(acorde: "", texto: " eu. "),
+    BlocoCifra(acorde: "G2", texto: "Quando"),
+    BlocoCifra(acorde: "", texto: " um homem judeu."),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "Viu a"),
+    BlocoCifra(acorde: "Bm7", texto: " sede, "),
+    BlocoCifra(acorde: "", texto: "que "),
+    BlocoCifra(acorde: "A/", baixo: "C#", texto: "havia"),
+    BlocoCifra(acorde: "", texto: " em "),
+    BlocoCifra(acorde: "G2", texto: "mim"),
+  ],
+  [
+    BlocoCifra(acorde: "Bm7", texto: "  Sem"),
+    BlocoCifra(acorde: "", texto: " me ouvir, "),
+    BlocoCifra(acorde: "A/", baixo: "C#", texto: "conheceu"),
+    BlocoCifra(acorde: "", texto: " e "),
+    BlocoCifra(acorde: "G2", texto: "me"),
+    BlocoCifra(acorde: "", texto: " ofereceu"),
+  ],
+  [
+    BlocoCifra(acorde: "Bm7", texto: "Uma água"),
+    BlocoCifra(acorde: "", texto: " que "),
+    BlocoCifra(acorde: "A/", baixo: "C#", texto: "jorra"),
+    BlocoCifra(acorde: "", texto: " sem "),
+    BlocoCifra(acorde: "G2", texto: "fim"),
+  ],
+  [
+    BlocoCifra(acorde: "Em7", texto: "Dá-me"),
+    BlocoCifra(acorde: "", texto: " de beber pois "),
+    BlocoCifra(acorde: "D/", baixo: "F#", texto: "tenho sede"),
+    BlocoCifra(acorde: "", texto: ""),
+    BlocoCifra(acorde: "", texto: ""),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "Não quero mais "),
+    BlocoCifra(acorde: "G2", texto: "buscar em "),
+    BlocoCifra(acorde: "", texto: "outras "),
+    BlocoCifra(acorde: "D/", baixo: "F#", texto: "Fontes"),
+  ],
+  [
+    BlocoCifra(acorde: "Em7", texto: "Não "),
+    BlocoCifra(acorde: "", texto: "precisarei aqui "),
+    BlocoCifra(acorde: "D/", baixo: "F#", texto: "Voltar"),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "Pra minha sede "),
+    BlocoCifra(acorde: "G2", texto: "saciar"),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "Uma vez que já "),
+    BlocoCifra(acorde: "A", texto: "ouvi"),
+    BlocoCifra(acorde: "", texto: " teu falar. "),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "Tu "),
+    BlocoCifra(acorde: "D", texto: "és,"),
+    BlocoCifra(acorde: "", texto: " por quem a minh'alma "),
+    BlocoCifra(acorde: "G", texto: "esperou"),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "A fonte da vida que"),
+    BlocoCifra(acorde: "Em7", texto: " me "),
+    BlocoCifra(acorde: "", texto: "encontrou"),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "És o Dom de Deus "),
+    BlocoCifra(acorde: "G", texto: "o Messias, o meu"),
+    BlocoCifra(acorde: "A", texto: " Salvador"),
+  ],
+  [
+    BlocoCifra(acorde: "[  ", texto: ""),
+    BlocoCifra(acorde: "Bm7   ", texto: ""),
+    BlocoCifra(acorde: "A/", baixo: "C#  ", texto: ""),
+    BlocoCifra(acorde: "G   ", texto: ""),
+    BlocoCifra(acorde: "Em7 ]", texto: ""),
+    BlocoCifra(acorde: "  -  ", texto: ""),
+    BlocoCifra(acorde: "[  ", texto: ""),
+    BlocoCifra(acorde: "Bm7   ", texto: ""),
+    BlocoCifra(acorde: "A/", baixo: "C#  ", texto: ""),
+    BlocoCifra(acorde: "G ]  ", texto: ""),
+  ],
+  [
+    BlocoCifra(acorde: "Em7", texto: "Dá-me"),
+    BlocoCifra(acorde: "", texto: " de beber pois "),
+    BlocoCifra(acorde: "D/", baixo: "F#", texto: "tenho sede....."),
+    BlocoCifra(acorde: "", texto: ""),
+    BlocoCifra(acorde: "", texto: ""),
+  ],
+  [
+    BlocoCifra(acorde: "D", texto: "Quero "),
+    BlocoCifra(acorde: "", texto: "beber do teu rio, "),
+    BlocoCifra(acorde: "D/", baixo: "F#", texto: "Senhor"),
+  ],
+  [
+    BlocoCifra(acorde: "G", texto: "Sacia"),
+    BlocoCifra(acorde: "D/", baixo: "F#", texto: " minha sede, "),
+    BlocoCifra(acorde: "", texto: "lava "),
+    BlocoCifra(acorde: "Em7", texto: "o meu "),
+    BlocoCifra(acorde: "A", texto: "interior"),
+  ],
+  [
+    BlocoCifra(acorde: "Bm7", texto: "Eu quero "),
+    BlocoCifra(acorde: "", texto: "fluir em tuas "),
+    BlocoCifra(acorde: "G", texto: "águas."),
+    BlocoCifra(acorde: "A", texto: "     "),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "Eu "),
+    BlocoCifra(acorde: "Bm7", texto: "quero"),
+    BlocoCifra(acorde: "", texto: " beber da tua "),
+    BlocoCifra(acorde: "G", texto: "fonte"),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "Fonte de águas "),
+    BlocoCifra(acorde: "A", texto: "vivas"),
+  ],
+  [
+    BlocoCifra(acorde: "D", texto: "Quero "),
+    BlocoCifra(acorde: "", texto: "beber do teu rio, "),
+    BlocoCifra(acorde: "D/", baixo: "F#", texto: "Senhor ..."),
+    BlocoCifra(acorde: "", texto: " (-- REPETIR --)"),
+  ],
+  [
+    BlocoCifra(acorde: "", texto: "Tu "),
+    BlocoCifra(acorde: "D", texto: "és,"),
+    BlocoCifra(acorde: "", texto: " por quem a minh'alma "),
+    BlocoCifra(acorde: "G", texto: "esperou"),
+    BlocoCifra(acorde: "", texto: " (-- REPETIR --)"),
   ],
 ];

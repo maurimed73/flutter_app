@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/music_class_server.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_app/database/cifra_repository.dart';
@@ -8,8 +9,10 @@ import 'package:flutter_app/database/cifra_repository.dart';
 import 'package:flutter_app/provider/music_provider.dart';
 
 class CifraApp extends StatefulWidget {
+  final MusicServer music;
   CifraApp({
     Key? key,
+    required this.music,
   }) : super(key: key);
 
   @override
@@ -21,109 +24,69 @@ class _CifraAppState extends State<CifraApp> {
 
   // List<List<BlocoCifra>> linhasFirebase = [
   //   [
-  //     BlocoCifra(acorde: "A9", texto: "Passei"),
-  //     BlocoCifra(acorde: "", texto: " anos no "),
-  //     BlocoCifra(acorde: "F#m7", texto: "deserto"),
-  //     BlocoCifra(acorde: "", texto: " "),
-  //     BlocoCifra(acorde: "C#m7", texto: "Pra"),
-  //     BlocoCifra(acorde: "", texto: " chegar à "),
-  //     BlocoCifra(acorde: "E", texto: "Canaã"),
+  //     BlocoCifra(acorde: "F#m", texto: "bUGA"),
+  //     BlocoCifra(acorde: "", texto: " promessa "),
+  //     BlocoCifra(acorde: "D", texto: "que "),
+  //     BlocoCifra(acorde: "", texto: "quer se cumpr"),
+  //     BlocoCifra(acorde: "A", texto: "ir "),
+  //     BlocoCifra(acorde: "", texto: "em meio a nós"),
+  //     BlocoCifra(acorde: "E", texto: "    "),
   //   ],
   //   [],
   //   [
-  //     BlocoCifra(acorde: "A9", texto: "Minha"),
-  //     BlocoCifra(acorde: "", texto: " terra "),
-  //     BlocoCifra(acorde: "F#m7", texto: "prometida"),
-  //     BlocoCifra(acorde: "", texto: "Terra de uma nova"),
-  //     BlocoCifra(acorde: "G#m7", texto: "vida"),
+  //     BlocoCifra(acorde: "F#m", texto: "É o"),
+  //     BlocoCifra(acorde: "", texto: " próprio Senhor "),
+  //     BlocoCifra(acorde: "D", texto: "quem "),
+  //     BlocoCifra(acorde: "", texto: "diz: "),
+  //     BlocoCifra(acorde: "A", texto: "pedi"),
+  //     BlocoCifra(acorde: "", texto: " e "),
+  //     BlocoCifra(acorde: "E", texto: "recebereis"),
   //   ],
   //   [
-  //     BlocoCifra(acorde: "", texto: "Livre da escra"),
-  //     BlocoCifra(acorde: "C#m7", texto: "vidão"),
+  //     BlocoCifra(acorde: "", texto: "Nenhum "),
+  //     BlocoCifra(acorde: "Bm", texto: "mal"),
+  //     BlocoCifra(acorde: "", texto: " irá resis"),
+  //     BlocoCifra(acorde: "D", texto: "tir"),
+  //     BlocoCifra(acorde: "A", texto: " Os mares"),
+  //     BlocoCifra(acorde: "", texto: " irão se "),
+  //     BlocoCifra(acorde: "E", texto: "abrir"),
   //   ],
   //   [
-  //     BlocoCifra(acorde: "A9", texto: "Apren"),
-  //     BlocoCifra(acorde: "", texto: "di que as ba"),
-  //     BlocoCifra(acorde: "F#m7", texto: "talhas "),
-  //     BlocoCifra(acorde: "C#m7", texto: "Eu as"),
-  //     BlocoCifra(acorde: "", texto: " venço no Se"),
-  //     BlocoCifra(acorde: "E", texto: "nhor"),
+  //     BlocoCifra(acorde: "", texto: "Quando a "),
+  //     BlocoCifra(acorde: "Bm", texto: "boca"),
+  //     BlocoCifra(acorde: "", texto: "de Deus decla"),
+  //     BlocoCifra(acorde: "D", texto: "rar"),
+  //     BlocoCifra(acorde: "A", texto: " Milagres"),
+  //     BlocoCifra(acorde: "E", texto: " neste "),
+  //     BlocoCifra(acorde: "D", texto: "lugar  "),
   //   ],
   //   [
-  //     BlocoCifra(acorde: "A9", texto: "Sus"),
-  //     BlocoCifra(acorde: "", texto: "tentado por Sua"),
-  //     BlocoCifra(acorde: "F#m7", texto: "Graça"),
-  //     BlocoCifra(acorde: "", texto: " Revestido da "),
-  //     BlocoCifra(acorde: "G#m7", texto: "couraça"),
+  //     BlocoCifra(acorde: "", texto: "Se eu"),
+  //     BlocoCifra(acorde: "F#m", texto: "orar,"),
+  //     BlocoCifra(acorde: "", texto: " se eu clamar as "),
+  //     BlocoCifra(acorde: "D", texto: "muralhas"),
+  //     BlocoCifra(acorde: "", texto: "não"),
   //   ],
   //   [
-  //     BlocoCifra(acorde: "", texto: "Dando brados de "),
-  //     BlocoCifra(acorde: "C#m7", texto: "louvor"),
-  //     BlocoCifra(acorde: "E", texto: "          "),
+  //     BlocoCifra(acorde: "", texto: "Resisti"),
+  //     BlocoCifra(acorde: "A", texto: "rão"),
+  //     BlocoCifra(acorde: "", texto: " ao poder de "),
+  //     BlocoCifra(acorde: "E", texto: "meu"),
+  //     BlocoCifra(acorde: "", texto: "Deus"),
   //   ],
   //   [
-  //     BlocoCifra(acorde: "", texto: "E mes"),
-  //     BlocoCifra(acorde: "", texto: "mo ontem, hoje e sem"),
-  //     BlocoCifra(acorde: "B", texto: "pre"),
+  //     BlocoCifra(acorde: "", texto: "Se eu"),
+  //     BlocoCifra(acorde: "Gm", texto: "orar,"),
+  //     BlocoCifra(acorde: "", texto: " se eu clamar as "),
+  //     BlocoCifra(acorde: "D#", texto: "muralhas"),
+  //     BlocoCifra(acorde: "", texto: "não"),
   //   ],
   //   [
-  //     BlocoCifra(acorde: "F#m7", texto: "Não "),
-  //     BlocoCifra(acorde: "", texto: "há outro Deus "),
-  //     BlocoCifra(acorde: "C#m7", texto: "igual. "),
-  //     BlocoCifra(acorde: "", texto: "Vou celebrar dias de "),
-  //     BlocoCifra(acorde: "A/", texto: "gló"),
-  //     BlocoCifra(acorde: "C#", texto: "ria"),
-  //   ],
-  //   [
-  //     BlocoCifra(acorde: "", texto: "Uma nova traj"),
-  //     BlocoCifra(acorde: "F#/", texto: "etó"),
-  //     BlocoCifra(acorde: "C#", texto: "ria"),
-  //   ],
-  //   [
-  //     BlocoCifra(acorde: "", texto: "Tocar o sobre"),
-  //     BlocoCifra(acorde: "G#4", texto: "natu"),
-  //     BlocoCifra(acorde: "", texto: "ral"),
-  //   ],
-  //   [
-  //     BlocoCifra(acorde: "C#m", texto: "Mura"),
-  //     BlocoCifra(acorde: "", texto: "lhas "),
-  //     BlocoCifra(acorde: "A", texto: "cairão"),
-  //     BlocoCifra(acorde: "", texto: ", dias de glória "),
-  //     BlocoCifra(acorde: "E", texto: "então"),
-  //   ],
-  //   [
-  //     BlocoCifra(acorde: "", texto: "Eu vive"),
-  //     BlocoCifra(acorde: "B", texto: "rei,"),
-  //     BlocoCifra(acorde: "", texto: " eu v"),
-  //     BlocoCifra(acorde: "C#m", texto: "iverei"),
-  //   ],
-  //   [
-  //     BlocoCifra(acorde: "", texto: "Para procla"),
-  //     BlocoCifra(acorde: "A", texto: "mar:"),
-  //     BlocoCifra(acorde: "", texto: " Meu Deus abriu o "),
-  //     BlocoCifra(acorde: "E", texto: "mar"),
-  //   ],
-  //   [
-  //     BlocoCifra(acorde: "", texto: "Deserto já pass"),
-  //     BlocoCifra(acorde: "B", texto: "ou."),
-  //     BlocoCifra(acorde: "", texto: " Vitória,"),
-  //   ],
-  //   [
-  //     BlocoCifra(acorde: "", texto: "Enfim, "),
-  //     BlocoCifra(acorde: "C#m", texto: "chegou"),
-  //   ],
-  //   [
-  //     BlocoCifra(acorde: "A9", texto: "Dias"),
-  //     BlocoCifra(acorde: "", texto: " de glória,"),
-  //     BlocoCifra(acorde: "F#m7", texto: " eu "),
-  //     BlocoCifra(acorde: "", texto: "viverei"),
-  //   ],
-  //   [
-  //     BlocoCifra(acorde: "C#m7", texto: "Mural"),
-  //     BlocoCifra(acorde: "", texto: "has cairão, mu"),
-  //     BlocoCifra(acorde: "B", texto: "ral"),
-  //     BlocoCifra(acorde: "", texto: "has cairão, oh"),
-  //     BlocoCifra(acorde: "A", texto: "oh"),
+  //     BlocoCifra(acorde: "", texto: "Resisti"),
+  //     BlocoCifra(acorde: "A#", texto: "rão"),
+  //     BlocoCifra(acorde: "", texto: " ao poder de "),
+  //     BlocoCifra(acorde: "F", texto: "meu"),
+  //     BlocoCifra(acorde: "", texto: "Deus"),
   //   ],
   // ];
 
@@ -160,7 +123,7 @@ class _CifraAppState extends State<CifraApp> {
   void initState() {
     super.initState();
     cifraFuture = repo.carregarLinhasCifra(
-      'dias_gloria',
+      widget.music.description,
     );
     //exemploUso();
     //enviarMusicaFirebase();
@@ -191,6 +154,142 @@ class _CifraAppState extends State<CifraApp> {
     final cifraconfig = context.read<MusicProvider>();
     double largura = MediaQuery.of(context).size.width;
     double altura = MediaQuery.of(context).size.height;
+    // List<List<BlocoCifra>> linhasFirebase = [
+    //   [
+    //     BlocoCifra(acorde: "Bm7", texto: " Junto"),
+    //     BlocoCifra(acorde: "", texto: " ao poço, "),
+    //     BlocoCifra(acorde: " A/", baixo: "C#", texto: "estava"),
+    //     BlocoCifra(acorde: "", texto: " eu. "),
+    //     BlocoCifra(acorde: "G2", texto: "Quando"),
+    //     BlocoCifra(acorde: "", texto: " um homem judeu."),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "", texto: "Viu a"),
+    //     BlocoCifra(acorde: "Bm7", texto: " sede, "),
+    //     BlocoCifra(acorde: "", texto: "que "),
+    //     BlocoCifra(acorde: "A/", baixo: "C#", texto: "havia"),
+    //     BlocoCifra(acorde: "", texto: " em "),
+    //     BlocoCifra(acorde: "G2", texto: "mim"),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "Bm7", texto: "  Sem"),
+    //     BlocoCifra(acorde: "", texto: " me ouvir, "),
+    //     BlocoCifra(acorde: "A/", baixo: "C#", texto: "conheceu"),
+    //     BlocoCifra(acorde: "", texto: " e "),
+    //     BlocoCifra(acorde: "G2", texto: "me"),
+    //     BlocoCifra(acorde: "", texto: " ofereceu"),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "Bm7", texto: "Uma água"),
+    //     BlocoCifra(acorde: "", texto: " que "),
+    //     BlocoCifra(acorde: "A/", baixo: "C#", texto: "jorra"),
+    //     BlocoCifra(acorde: "", texto: " sem "),
+    //     BlocoCifra(acorde: "G2", texto: "fim"),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "Em7", texto: "Dá-me"),
+    //     BlocoCifra(acorde: "", texto: " de beber pois "),
+    //     BlocoCifra(acorde: "D/", baixo: "F#", texto: "tenho sede"),
+    //     BlocoCifra(acorde: "", texto: ""),
+    //     BlocoCifra(acorde: "", texto: ""),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "", texto: "Não quero mais "),
+    //     BlocoCifra(acorde: "G2", texto: "buscar em "),
+    //     BlocoCifra(acorde: "", texto: "outras "),
+    //     BlocoCifra(acorde: "D/", baixo: "F#", texto: "Fontes"),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "Em7", texto: "Não "),
+    //     BlocoCifra(acorde: "", texto: "precisarei aqui "),
+    //     BlocoCifra(acorde: "D/", baixo: "F#", texto: "Voltar"),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "", texto: "Pra minha sede "),
+    //     BlocoCifra(acorde: "G2", texto: "saciar"),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "", texto: "Uma vez que já "),
+    //     BlocoCifra(acorde: "A", texto: "ouvi"),
+    //     BlocoCifra(acorde: "", texto: " teu falar. "),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "", texto: "Tu"),
+    //     BlocoCifra(acorde: "D", texto: "és,"),
+    //     BlocoCifra(acorde: "", texto: " por quem a minh'alma "),
+    //     BlocoCifra(acorde: "G", texto: "esperou"),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "", texto: "A fonte da vida que"),
+    //     BlocoCifra(acorde: "Em7", texto: " me "),
+    //     BlocoCifra(acorde: "", texto: "encontrou"),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "", texto: "És o Dom de Deus "),
+    //     BlocoCifra(acorde: "G", texto: "o Messias, o meu"),
+    //     BlocoCifra(acorde: "A", texto: " Salvador"),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "[  ", texto: ""),
+    //     BlocoCifra(acorde: "Bm7   ", texto: ""),
+    //     BlocoCifra(acorde: "A/", baixo: "C#  ", texto: ""),
+    //     BlocoCifra(acorde: "G   ", texto: ""),
+    //     BlocoCifra(acorde: "Em7 ]", texto: ""),
+    //     BlocoCifra(acorde: "  -  ", texto: ""),
+    //     BlocoCifra(acorde: "[  ", texto: ""),
+    //     BlocoCifra(acorde: "Bm7   ", texto: ""),
+    //     BlocoCifra(acorde: "A/", baixo: "C#  ", texto: ""),
+    //     BlocoCifra(acorde: "G ]  ", texto: ""),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "Em7", texto: "Dá-me"),
+    //     BlocoCifra(acorde: "", texto: " de beber pois "),
+    //     BlocoCifra(acorde: "D/", baixo: "F#", texto: "tenho sede....."),
+    //     BlocoCifra(acorde: "", texto: ""),
+    //     BlocoCifra(acorde: "", texto: ""),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "D", texto: "Quero "),
+    //     BlocoCifra(acorde: "", texto: "beber do teu rio, "),
+    //     BlocoCifra(acorde: "D/", baixo: "F#", texto: "Senhor"),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "G", texto: "Sacia"),
+    //     BlocoCifra(acorde: "D/", baixo: "F#", texto: " minha sede, "),
+    //     BlocoCifra(acorde: "", texto: "lava "),
+    //     BlocoCifra(acorde: "Em7", texto: "o meu "),
+    //     BlocoCifra(acorde: "A", texto: "interior"),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "Bm7", texto: "Eu quero "),
+    //     BlocoCifra(acorde: "", texto: "fluir em tuas"),
+    //     BlocoCifra(acorde: "G", texto: "águas."),
+    //     BlocoCifra(acorde: "A", texto: "     "),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "", texto: "Eu"),
+    //     BlocoCifra(acorde: "Bm7", texto: "quero"),
+    //     BlocoCifra(acorde: "", texto: " beber da tua "),
+    //     BlocoCifra(acorde: "G", texto: "fonte"),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "", texto: "Fonte de águas "),
+    //     BlocoCifra(acorde: "A", texto: "vivas"),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "D", texto: "Quero "),
+    //     BlocoCifra(acorde: "", texto: "beber do teu rio, "),
+    //     BlocoCifra(acorde: "D/", baixo: "F#", texto: "Senhor ..."),
+    //     BlocoCifra(acorde: "", texto: " (-- REPETIR --)"),
+    //   ],
+    //   [
+    //     BlocoCifra(acorde: "", texto: "Tu"),
+    //     BlocoCifra(acorde: "D", texto: "és,"),
+    //     BlocoCifra(acorde: "", texto: " por quem a minh'alma "),
+    //     BlocoCifra(acorde: "G", texto: "esperou"),
+    //     BlocoCifra(acorde: "", texto: " (-- REPETIR --)"),
+    //   ],
+    // ];
 
     print(' largura é: $largura');
     print(' altura é: $altura');
@@ -206,7 +305,7 @@ class _CifraAppState extends State<CifraApp> {
               Container(
                 width: largura < 400
                     ? 100
-                    : 120, // 🔥 Aumentei proporcionalmente, ajuste como quiser
+                    : 140, // 🔥 Aumentei proporcionalmente, ajuste como quiser
                 height: 40,
                 margin: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
@@ -228,7 +327,7 @@ class _CifraAppState extends State<CifraApp> {
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(8),
                                 bottomLeft: Radius.circular(8))),
-                        width: largura < 400 ? 30 : 80, // ,
+                        width: largura < 400 ? 30 : 40, // ,
                         alignment: Alignment.center,
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
@@ -244,7 +343,7 @@ class _CifraAppState extends State<CifraApp> {
                     ),
                     // Texto do meio (Texto ou Restaurar)
                     Container(
-                      width: largura < 400 ? 38 : 80, // ,
+                      width: largura < 400 ? 38 : 58, // ,
                       color: const Color.fromARGB(255, 243, 242, 242),
                       alignment: Alignment.center,
                       child: FittedBox(
@@ -267,7 +366,7 @@ class _CifraAppState extends State<CifraApp> {
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(8),
                                 bottomRight: Radius.circular(8))),
-                        width: largura < 400 ? 30 : 80, // ,
+                        width: largura < 400 ? 30 : 40, // ,
                         alignment: Alignment.center,
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
@@ -284,14 +383,12 @@ class _CifraAppState extends State<CifraApp> {
                   ],
                 ),
               ),
-              SizedBox(
-                width: 20,
-              ),
+              SizedBox(width: 20),
               // ESCOLHA DA CIFRA
               Container(
                 width: largura < 400
                     ? 100
-                    : 120, // 🔥 Aumentei proporcionalmente, ajuste como quiser
+                    : 140, // 🔥 Aumentei proporcionalmente, ajuste como quiser
                 height: 40,
                 margin: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
@@ -313,7 +410,7 @@ class _CifraAppState extends State<CifraApp> {
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(8),
                                 bottomLeft: Radius.circular(8))),
-                        width: largura < 400 ? 30 : 80, // ,
+                        width: largura < 400 ? 30 : 40, // ,
                         alignment: Alignment.center,
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
@@ -329,7 +426,7 @@ class _CifraAppState extends State<CifraApp> {
                     ),
 
                     Container(
-                      width: largura < 400 ? 38 : 80, // ,
+                      width: largura < 400 ? 38 : 58, // ,
                       color: const Color.fromARGB(255, 243, 242, 242),
                       alignment: Alignment.center,
                       child: FittedBox(
@@ -352,7 +449,7 @@ class _CifraAppState extends State<CifraApp> {
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(8),
                                 bottomRight: Radius.circular(8))),
-                        width: largura < 400 ? 30 : 80, // ,
+                        width: largura < 400 ? 30 : 40, // ,
                         alignment: Alignment.center,
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
@@ -371,13 +468,6 @@ class _CifraAppState extends State<CifraApp> {
               ),
             ],
           ),
-          actions: [
-            // IconButton(
-            //     onPressed: () async {
-            //       exemploUso();
-            //     },
-            //     icon: Icon(Icons.data_array))
-          ],
         ),
         body: FutureBuilder<List<List<BlocoCifra>>>(
           future: cifraFuture, // 🔥 Future fixo aqui
@@ -392,20 +482,48 @@ class _CifraAppState extends State<CifraApp> {
               return const Center(child: Text('Nenhuma cifra encontrada.'));
             }
 
+            //ARRUMAR CIFRA
             final linhas = snapshot.data!;
-
+            //final linhas = linhasFirebase;
+            BlocoCifra tomMusica = BlocoCifra(texto: "", acorde: "G");
             return Padding(
               padding: const EdgeInsets.all(16),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: linhas.map((linha) {
-                    return LinhaCifra(
-                      blocos: linha,
-                      transpose: value.transpose,
-                      transporAcorde: transporAcorde,
-                    );
-                  }).toList(),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Tom:',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: value.fonteTamanho + 8,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            '  ${(transporAcorde('E', value.transpose))}',
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontSize: value.fonteTamanho + 8,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: linhas.map((linha) {
+                        return LinhaCifra(
+                          blocos: linha,
+                          transpose: value.transpose,
+                          transporAcorde: transporAcorde,
+                        );
+                      }).toList(),
+                    ),
+                  ],
                 ),
               ),
             );
@@ -430,6 +548,7 @@ class LinhaCifra extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isbass = true;
     return Consumer<MusicProvider>(
       builder: (context, value, child) => Padding(
         padding: const EdgeInsets.only(bottom: 16),
@@ -438,28 +557,68 @@ class LinhaCifra extends StatelessWidget {
           spacing: 1,
           runSpacing: 1,
           children: blocos.map((bloco) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  bloco.acorde != null
-                      ? transporAcorde(bloco.acorde!, transpose)
-                      : '',
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: value.fonteTamanho,
+            if (bloco.acorde!.contains('/')) {
+              isbass = true;
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    isbass && bloco.baixo != null
+                        ? '${transporAcorde(bloco.acorde!, transpose)}${transporAcorde(bloco.baixo!, transpose)}'
+                        : bloco.acorde != null
+                            ? '${transporAcorde(bloco.acorde!, transpose)}'
+                            : '',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: value.fonteTamanho,
+                    ),
                   ),
-                ),
-                Text(
-                  bloco.texto,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: value.fonteTamanho,
+                  Text(
+                    bloco.texto,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: value.fonteTamanho,
+                    ),
                   ),
-                ),
-              ],
-            );
+                ],
+              );
+            } else {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Text(
+                  //   bloco.acorde != null
+                  //       ? '${transporAcorde(bloco.acorde!, transpose)}'
+                  //       : '',
+                  //   style: TextStyle(
+                  //     color: Colors.red,
+                  //     fontWeight: FontWeight.bold,
+                  //     fontSize: value.fonteTamanho,
+                  //   ),
+                  // ),
+                  Text(
+                    isbass
+                        ? '${transporAcorde(bloco.acorde!, transpose)}'
+                        : bloco.acorde != null
+                            ? '${transporAcorde(bloco.acorde!, transpose)}'
+                            : '',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: value.fonteTamanho,
+                    ),
+                  ),
+                  Text(
+                    bloco.texto,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: value.fonteTamanho,
+                    ),
+                  ),
+                ],
+              );
+            }
           }).toList(),
         ),
       ),
@@ -470,18 +629,17 @@ class LinhaCifra extends StatelessWidget {
 class BlocoCifra {
   final String? acorde;
   final String texto;
+  final String? baixo;
 
-  BlocoCifra({this.acorde, required this.texto});
+  BlocoCifra({this.baixo, this.acorde, required this.texto});
 
   Map<String, dynamic> toMap() {
-    return {
-      'acorde': acorde,
-      'texto': texto,
-    };
+    return {'acorde': acorde, 'texto': texto, 'baixo': baixo};
   }
 
   factory BlocoCifra.fromMap(Map<String, dynamic> map) {
     return BlocoCifra(
+      baixo: map['baixo'],
       acorde: map['acorde'],
       texto: map['texto'] ?? '',
     );
