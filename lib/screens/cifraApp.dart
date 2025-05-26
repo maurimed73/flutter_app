@@ -153,7 +153,7 @@ class _CifraAppState extends State<CifraApp> {
   Widget build(BuildContext context) {
     final cifraconfig = context.read<MusicProvider>();
     double largura = MediaQuery.of(context).size.width;
-    double altura = MediaQuery.of(context).size.height;
+    //double altura = MediaQuery.of(context).size.height;
     // List<List<BlocoCifra>> linhasFirebase = [
     //   [
     //     BlocoCifra(acorde: "Bm7", texto: " Junto"),
@@ -291,8 +291,6 @@ class _CifraAppState extends State<CifraApp> {
     //   ],
     // ];
 
-    print(' largura é: $largura');
-    print(' altura é: $altura');
     return Consumer<MusicProvider>(
       builder: (context, value, child) => Scaffold(
         backgroundColor: Colors.white,
@@ -485,7 +483,7 @@ class _CifraAppState extends State<CifraApp> {
             //ARRUMAR CIFRA
             final linhas = snapshot.data!;
             //final linhas = linhasFirebase;
-            BlocoCifra tomMusica = BlocoCifra(texto: "", acorde: "G");
+
             return Padding(
               padding: const EdgeInsets.all(16),
               child: SingleChildScrollView(
@@ -504,7 +502,7 @@ class _CifraAppState extends State<CifraApp> {
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            '  ${(transporAcorde('E', value.transpose))}',
+                            '  ${(transporAcorde(widget.music.tomOriginal, value.transpose))}',
                             style: TextStyle(
                                 color: Colors.red,
                                 fontSize: value.fonteTamanho + 8,

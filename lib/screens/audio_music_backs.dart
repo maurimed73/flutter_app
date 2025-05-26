@@ -31,18 +31,18 @@ class _BacksMusicState extends State<BacksMusic> {
     loadMusics();
   }
 
-  Future<void> loadMusicFiles() async {
-    final dir = await getApplicationDocumentsDirectory();
-    final musicDir = Directory('${dir.path}/dias_gloria');
+  // Future<void> loadMusicFiles() async {
+  //   final dir = await getApplicationDocumentsDirectory();
+  //   final musicDir = Directory('${dir.path}/dias_gloria');
 
-    if (await musicDir.exists()) {
-      final files =
-          musicDir.listSync().where((f) => f.path.endsWith('.mp3')).toList();
-      setState(() {
-        musicFiles = files;
-      });
-    }
-  }
+  //   if (await musicDir.exists()) {
+  //     final files =
+  //         musicDir.listSync().where((f) => f.path.endsWith('.mp3')).toList();
+  //     setState(() {
+  //       musicFiles = files;
+  //     });
+  //   }
+  // }
 
   Future<void> loadMusics() async {
     // final status = await Permission.storage.request();
@@ -50,7 +50,7 @@ class _BacksMusicState extends State<BacksMusic> {
 
     // Caminho da pasta de músicas
     final directory = await getApplicationDocumentsDirectory();
-    final localPath = '${directory.path}/${widget.music.description}/';
+    //final localPath = '${directory.path}/${widget.music.description}/';
     final Directory dir =
         Directory('${directory.path}/${widget.music.description}/');
     if (await dir.exists()) {
@@ -58,6 +58,7 @@ class _BacksMusicState extends State<BacksMusic> {
         return f.path.endsWith('.mp3') &&
             !f.path.endsWith('${widget.music.description}.mp3');
       }).toList();
+      //print(files);
       setState(() {
         musicFiles = files;
       });
@@ -130,7 +131,7 @@ class _BacksMusicState extends State<BacksMusic> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.music.title);
+    //print(widget.music.title);
     return Scaffold(
       appBar: AppBar(
         title: Text(

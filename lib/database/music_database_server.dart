@@ -32,6 +32,7 @@ class MusicDatabaseServer {
         description TEXT,
         pdfUrl TEXT,
         linkUrl TEXT,
+        tomOriginal TEXT,
         backs TEXT
       )
     ''');

@@ -4,6 +4,7 @@ class MusicServer {
   final String description;
   final String pdfUrl;
   final String linkUrl;
+  final String tomOriginal;
   final Map<String, dynamic> backs;
 
   MusicServer({
@@ -12,11 +13,13 @@ class MusicServer {
     required this.description,
     required this.pdfUrl,
     required this.linkUrl,
+    required this.tomOriginal,
     this.backs = const {},
   });
 
   factory MusicServer.fromMap(Map<String, dynamic> map) {
     return MusicServer(
+      tomOriginal: map['tomOriginal'] ?? '',
       title: map['title'] ?? '',
       imageUrl: map['imageUrl'] ?? '',
       description: map['description'] ?? '',
@@ -28,6 +31,7 @@ class MusicServer {
 
   Map<String, dynamic> toMap() {
     return {
+      'tomOriginal': tomOriginal,
       'title': title,
       'imageUrl': imageUrl,
       'description': description,

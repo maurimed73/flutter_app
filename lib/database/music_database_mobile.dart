@@ -31,6 +31,7 @@ class MusicDatabaseMobile {
         description TEXT,
         pdfUrl TEXT,
         linkUrl TEXT,
+        tomOriginal TEXT,
         backs TEXT
       )
     ''');
