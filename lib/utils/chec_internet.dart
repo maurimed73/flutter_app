@@ -1,6 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/music_servidor.dart';
+import 'package:PadsBuga/screens/pads_down/music_servidor.dart';
 import 'package:lottie/lottie.dart';
 
 class CheckConnectionPage extends StatefulWidget {
@@ -44,7 +44,7 @@ class _CheckConnectionPageState extends State<CheckConnectionPage> {
         ),
       );
     } else if (isConnected == true) {
-      return const MusicServidor();
+      return const KitServidor();
     } else {
       return NoConnectionPage(onRetry: checkConnection);
     }

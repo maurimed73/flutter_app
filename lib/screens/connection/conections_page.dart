@@ -1,6 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/music_mobile.dart';
+import 'package:PadsBuga/screens/music_mobile.dart';
 import 'package:lottie/lottie.dart';
 
 class CheckConnectionPage extends StatefulWidget {

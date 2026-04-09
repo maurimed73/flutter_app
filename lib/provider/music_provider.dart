@@ -1,13 +1,12 @@
 import 'dart:async';
-
+import 'package:PadsBuga/database/kit_database_model.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import '../database/music_database_server.dart';
 import '../models/music_class_server.dart';
 
 class MusicProvider with ChangeNotifier {
-  List<MusicServer> _musicas = [];
-  List<MusicServer> get musicas => _musicas;
+  List<KitServer> _musicas = [];
+  List<KitServer> get musicas => _musicas;
   bool carregando = true;
 
   final _connectivity = Connectivity();
@@ -61,9 +60,9 @@ class MusicProvider with ChangeNotifier {
     carregando = true;
 
     notifyListeners();
-    final tempoMinimo = Future.delayed(Duration(seconds: 4));
+    final tempoMinimo = Future.delayed(Duration(seconds: 2));
     try {
-      final db = MusicDatabaseServer.instance;
+      final db = KitDatabaseMobile.instance;
       _musicas = await db.getAllMusics();
     } catch (e) {
       _musicas = [];
@@ -81,23 +80,16 @@ class MusicProvider with ChangeNotifier {
     super.dispose();
   }
 
-  // /// Carrega as músicas do banco SQLite
-  // Future<void> carregarMusicas() async {
-  //   final db = MusicDatabaseServer.instance;
-  //   _musicas = await db.getAllMusics();
-  //   notifyListeners();
-  // }
-
-  /// Deleta uma música pelo ID
+   /// Deleta uma música pelo ID
   Future<void> deletarMusica(String title) async {
-    final db = MusicDatabaseServer.instance;
+    final db = KitDatabaseMobile.instance;
     await db.deleteMusicByTitle(title);
     await carregarMusicas();
   }
 
   /// Deleta todas as músicas
   Future<void> deletarTodas() async {
-    final db = MusicDatabaseServer.instance;
+    final db = KitDatabaseMobile.instance;
     await db.deleteAllMusics();
     await carregarMusicas();
   }

@@ -1,18 +1,17 @@
-import 'dart:convert';
-import 'package:flutter_app/models/music_class_server.dart';
+import 'package:PadsBuga/models/music_class_server.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-class MusicDatabaseMobile {
-  static final MusicDatabaseMobile instance = MusicDatabaseMobile._init();
+class KitDatabaseMobile {
+  static final KitDatabaseMobile instance = KitDatabaseMobile._init();
   static Database? _database;
 
-  MusicDatabaseMobile._init();
+  KitDatabaseMobile._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('music.db');
+    _database = await _initDB('padsbuga.db');
     return _database!;
   }
 
@@ -20,48 +19,59 @@ class MusicDatabaseMobile {
     final dir = await getApplicationDocumentsDirectory();
     final path = join(dir.path, fileName);
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(path, version: 3, onCreate: _createDB);
   }
 
   Future<void> _createDB(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE musics (
+      CREATE TABLE kit (
         title TEXT PRIMARY KEY,
         imageUrl TEXT,
         description TEXT,
-        pdfUrl TEXT,
-        linkUrl TEXT,
-        tomOriginal TEXT,
-        backs TEXT
+        refstorage TEXT,
+        sound1Nome TEXT,
+        sound2Nome TEXT,
+        sound3Nome TEXT,
+        sound4Nome TEXT,
+        sound1Patch TEXT,
+        sound2Patch TEXT,
+        sound3Patch TEXT,
+        sound4Patch TEXT,
+        sound1Volume REAL,
+        sound2Volume REAL,
+        sound3Volume REAL,
+        sound4Volume REAL,
+        isLoop1 INTEGER,
+        isLoop2 INTEGER,
+        isLoop3 INTEGER,
+        isLoop4 INTEGER
       )
     ''');
   }
 
-  Future<void> insertMusic(MusicServer music) async {
+  Future<void> insertMusic(KitServer music) async {
     final db = await instance.database;
     await db.insert(
-      'musics',
-      music.toMap()..['backs'] = jsonEncode(music.backs),
+      'kit',
+      music.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  Future<List<MusicServer>> getAllMusics() async {
+  Future<List<KitServer>> getAllMusics() async {
     final db = await instance.database;
-    final result = await db.query('musics');
+    final result = await db.query('kit');
 
     return result.map((map) {
-      final backsString = map['backs'];
-      return MusicServer.fromMap({
+      return KitServer.fromJson({
         ...map,
-        'backs': backsString is String ? jsonDecode(backsString) : {},
       });
     }).toList();
   }
 
   Future<void> deleteAllMusics() async {
     final db = await instance.database;
-    await db.delete('musics');
+    await db.delete('kit');
   }
 
   Future close() async {
@@ -72,7 +82,7 @@ class MusicDatabaseMobile {
   Future<bool> isMusicDownloaded(String title) async {
     final db = await instance.database;
     final result = await db.query(
-      'musics',
+      'kit',
       where: 'title = ?',
       whereArgs: [title],
       limit: 1,
@@ -84,7 +94,23 @@ class MusicDatabaseMobile {
     final db = await instance.database;
 
     await db.delete(
-      'musics',
+      'kit',
+      where: 'title = ?',
+      whereArgs: [title],
+    );
+    print(db.path.contains('isLoop'));
+  }
+
+  Future<void> updateMusicParam({
+    required String title,
+    required String campo,
+    required dynamic valor,
+  }) async {
+    final db = await instance.database;
+
+    await db.update(
+      'kit',
+      {campo: valor},
       where: 'title = ?',
       whereArgs: [title],
     );

@@ -1,4 +1,4 @@
-name: flutter_app
+name: PadsBuga
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -51,6 +51,9 @@ dependencies:
   connectivity_plus: ^6.1.4
   provider: ^6.1.5
   file_picker: ^10.1.9
+  shared_preferences: ^2.5.3
+  firebase_auth: ^5.5.4
+  flutter_midi_command: ^0.5.3
 
 
 

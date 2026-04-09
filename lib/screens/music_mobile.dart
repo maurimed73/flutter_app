@@ -1,17 +1,19 @@
 import 'dart:io';
 import 'dart:ui';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:PadsBuga/authentication/auth_service.dart';
+import 'package:PadsBuga/database/kit_database_model.dart';
+import 'package:PadsBuga/main.dart';
+import 'package:PadsBuga/screens/pads/music_pad.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/data_for_firebase/config_Musicas.dart';
-import 'package:flutter_app/database/music_database_server.dart';
-import 'package:flutter_app/provider/music_provider.dart';
-import 'package:flutter_app/screens/cifraPage.dart';
-import 'package:flutter_app/screens/music_servidor.dart';
-import 'package:flutter_app/utils/responsive_utils.dart';
-import 'package:flutter_app/models/music_class_server.dart';
+import 'package:PadsBuga/provider/music_provider.dart';
+import 'package:PadsBuga/screens/pads_down/music_servidor.dart';
+import 'package:PadsBuga/utils/responsive_utils.dart';
+import 'package:PadsBuga/models/music_class_server.dart';
 import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MusicMobile extends StatefulWidget {
   const MusicMobile({
@@ -23,7 +25,7 @@ class MusicMobile extends StatefulWidget {
 }
 
 class _MusicMobileState extends State<MusicMobile> {
-  late Future<List<MusicServer>> _futureMusicas;
+  late Future<List<KitServer>> _futureMusicas;
   int numeroMusicas = 0;
   Icon iconDown = Icon(
     Icons.download,
@@ -34,9 +36,20 @@ class _MusicMobileState extends State<MusicMobile> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<MusicProvider>(context, listen: false).carregarMusicas());
+    carregarNome();
+    Future.microtask(() => Provider.of<MusicProvider>(context, listen: false).carregarMusicas());
     //_futureMusicas = listarMusicas();
+  }
+
+  String nome = 'Usuário';
+  String email = "E-mail";
+
+  Future<void> carregarNome() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      nome = prefs.getString('displayName') ?? 'Usuário';
+      email = prefs.getString('email') ?? 'E-mail';
+    });
   }
 
   @override
@@ -44,21 +57,69 @@ class _MusicMobileState extends State<MusicMobile> {
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              Container(
+                height: 100,
+                child: UserAccountsDrawerHeader(
+                  decoration: BoxDecoration(color: Colors.black),
+                  accountName: Text('Bem vindo $nome'),
+                  accountEmail: Text(email),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.home),
+                title: const Text('Início'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.settings),
+                title: const Text('Configurações'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              const Spacer(), // 🧽 Empurra os itens seguintes para o final
+              ListTile(
+                leading: const Icon(Icons.logout),
+                title: Text('Deslogar'),
+                onTap: () async {
+                  AuthService().deslogar();
+                  // Opcional: limpar dados locais
+                  //final prefs = await SharedPreferences.getInstance();
+                  //await prefs.clear();
+
+                  if (context.mounted) {
+                    Navigator.pop(context); // Fecha o drawer
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RoteadorTelas(),
+                        ));
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
             actions: [
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 20),
-              //   child: IconButton(
-              //       onPressed: () {
-              //         Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //             builder: (context) => ConfigMusica(),
-              //           ),
-              //         );
-              //       },
-              //       icon: Icon(Icons.data_array)),
-              // )
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: IconButton(
+                    onPressed: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => ConfigMusica(),
+                      //   ),
+                      // );
+                    },
+                    icon: Icon(Icons.data_array)),
+              )
             ],
             toolbarHeight: ResponsiveUtils.scalePercent(context, 25),
             title: Container(
@@ -70,24 +131,14 @@ class _MusicMobileState extends State<MusicMobile> {
                   Row(
                     children: [
                       Text(
-                        'Cerco Jericó 2025',
-                        style: TextStyle(
-                            fontSize: ResponsiveUtils.scalePercent(context, 6),
-                            color: Colors.white),
+                        'PadsBuga',
+                        style: TextStyle(fontSize: ResponsiveUtils.scalePercent(context, 6), color: Colors.white),
                       ),
                     ],
                   ),
                   Text(
-                    'Nossa Senhora do Rosário',
-                    style: TextStyle(
-                        fontSize: ResponsiveUtils.scalePercent(context, 4),
-                        color: Colors.amber),
-                  ),
-                  Text(
                     'Repertório',
-                    style: TextStyle(
-                        fontSize: ResponsiveUtils.scalePercent(context, 4),
-                        color: Colors.white),
+                    style: TextStyle(fontSize: ResponsiveUtils.scalePercent(context, 4), color: Colors.white),
                   ),
                 ],
               ),
@@ -100,9 +151,8 @@ class _MusicMobileState extends State<MusicMobile> {
                 height: double.infinity,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/eucaristia.jpg'),
-                    fit:
-                        BoxFit.cover, // Faz a imagem preencher todo o container
+                    image: AssetImage('assets/images/background_image.png'),
+                    fit: BoxFit.cover, // Faz a imagem preencher todo o container
                   ),
                 ),
               ),
@@ -119,8 +169,7 @@ class _MusicMobileState extends State<MusicMobile> {
             SafeArea(child: Consumer<MusicProvider>(
               builder: (context, provider, _) {
                 final musicas = provider.musicas;
-                final carregando =
-                    provider.carregando; // você define isso no seu provider
+                final carregando = provider.carregando; // você define isso no seu provider
 
                 if (carregando) {
                   return Center(
@@ -136,8 +185,7 @@ class _MusicMobileState extends State<MusicMobile> {
                           SizedBox(
                             height: 30,
                             width: 150,
-                            child: Lottie.asset('assets/downloads/dotsBig.json',
-                                fit: BoxFit.contain),
+                            child: Lottie.asset('assets/downloads/dotsBig.json', fit: BoxFit.contain),
                           ),
                         ],
                       ),
@@ -167,7 +215,7 @@ class _MusicMobileState extends State<MusicMobile> {
                     return ListTile(
                       leading: Icon(Icons.music_note, color: Colors.amber),
                       title: Text(music.title),
-                      subtitle: Text(music.title ?? 'Artista desconhecido'),
+                      subtitle: Text(music.description ?? 'Artista desconhecido'),
                       trailing: IconButton(
                         icon: Icon(Icons.delete, color: Colors.redAccent),
                         onPressed: () async {
@@ -175,12 +223,10 @@ class _MusicMobileState extends State<MusicMobile> {
                             context: context,
                             builder: (context) => AlertDialog(
                               title: const Text('Confirmar exclusão'),
-                              content: const Text(
-                                  'Tem certeza que deseja apagar os dados locais desta música?'),
+                              content: const Text('Tem certeza que deseja apagar os dados locais desta música?'),
                               actions: [
                                 TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(context, false),
+                                  onPressed: () => Navigator.pop(context, false),
                                   child: const Text('Cancelar'),
                                 ),
                                 TextButton(
@@ -195,22 +241,21 @@ class _MusicMobileState extends State<MusicMobile> {
                           );
 
                           if (confirm == true) {
-                            provider.setDownloadStatus(
-                                music.title, 'deletando');
+                            provider.setDownloadStatus(music.title, 'deletando');
 
                             await deletarPastaMusica(music.description);
-                            await MusicDatabaseServer.instance
-                                .deleteMusicByTitle(music.title);
+                            await KitDatabaseMobile.instance.deleteMusicByTitle(music.title);
                             provider.deletarMusica(music.title);
                             provider.carregarMusicas();
                           }
                         },
                       ),
                       onTap: () {
+                        print(music.title);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => CifraPage(music: music),
+                            builder: (_) => MusicPad(music: music),
                           ),
                         );
                       },
@@ -230,7 +275,7 @@ class _MusicMobileState extends State<MusicMobile> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MusicServidor(),
+                    builder: (context) => KitServidor(),
                   ));
             }),
       ),
@@ -239,19 +284,18 @@ class _MusicMobileState extends State<MusicMobile> {
 
   void deletarMusicas() async {
     // print(music.title);
-    final db = MusicDatabaseServer.instance;
+    final db = KitDatabaseMobile.instance;
 
     await db.deleteAllMusics();
     // Limpa os status de download para que volte ao ícone de download
     setState(() {
-      downloadStatus
-          .clear(); // limpa todos os status para forçar ícone de download
+      downloadStatus.clear(); // limpa todos os status para forçar ícone de download
     });
   }
 
-  Future<List<MusicServer>> listarMusicas() async {
-    final db = MusicDatabaseServer.instance;
-    List<MusicServer> listaMusicas = await db.getAllMusics();
+  Future<List<KitServer>> listarMusicas() async {
+    final db = KitDatabaseMobile.instance;
+    List<KitServer> listaMusicas = await db.getAllMusics();
 
     numeroMusicas = listaMusicas.length;
     return listaMusicas;

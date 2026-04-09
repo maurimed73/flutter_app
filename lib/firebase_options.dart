@@ -51,21 +51,19 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDcbi22N9B1jZrRylf2EBRZRB0kaThg6uo',
-    appId: '1:731123317224:android:31e3af3282797b9fde8c5d',
-    messagingSenderId: '731123317224',
-    projectId: 'igrejansl-89d79',
-    databaseURL: 'https://igrejansl-89d79-default-rtdb.firebaseio.com',
-    storageBucket: 'igrejansl-89d79.appspot.com',
+    apiKey: 'AIzaSyC5HAALnZre-xERQh9lRt5SjQkQlvY_Y7c',
+    appId: '1:503843909849:android:43f7445f41a057c08b4ec8',
+    messagingSenderId: '503843909849',
+    projectId: 'appensaio',
+    storageBucket: 'appensaio.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAKFfQdCA0byl2VdPxO4HFwx3n_4pje-2g',
-    appId: '1:731123317224:ios:e6c50283cc4e7844de8c5d',
-    messagingSenderId: '731123317224',
-    projectId: 'igrejansl-89d79',
-    databaseURL: 'https://igrejansl-89d79-default-rtdb.firebaseio.com',
-    storageBucket: 'igrejansl-89d79.appspot.com',
+    apiKey: 'AIzaSyAFgbRKjNdEvmAymcOAMgLdG4unnGVB9Ow',
+    appId: '1:503843909849:ios:d0f1d7d1388088ec8b4ec8',
+    messagingSenderId: '503843909849',
+    projectId: 'appensaio',
+    storageBucket: 'appensaio.firebasestorage.app',
     iosBundleId: 'com.example.flutterApp',
   );
 
